@@ -1,0 +1,12 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.inlayHints.parameterNames.enabled": "none", 
+    "files.exclude": {
+        // ".gradle/": true,
+        // "gradle/": true,
+        // "**/build/": true,
+        // "**/bin/": true,
+        // "gradlew" : true,
+        // "gradlew.bat" : true,
+    }
+}

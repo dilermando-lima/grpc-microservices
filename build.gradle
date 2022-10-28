@@ -1,0 +1,110 @@
+plugins {
+  id 'org.sonarqube' version '3.4.0.2513' apply false
+  id 'com.google.protobuf' version '0.9.1' apply false
+}
+
+
+subprojects {
+
+    if( isTypeProject("JAVA","${project.name}") ){
+        apply plugin: "java"
+
+        repositories {
+            mavenLocal()
+            maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
+            mavenCentral()
+        }
+        
+        group='grpc.mstest'
+        version="${project["ms.version.${project.name}"]}"
+        sourceCompatibility=17
+        targetCompatibility=17
+        
+        sourceSets { // all project with TypeProject.JAVA will have same structure
+            main.java.srcDirs = ['src']
+            main.resources.srcDirs = ['src-resource']
+            test.java.srcDirs = ['tst']
+            test.resources.srcDirs = ['tst-resource']
+        }
+    }
+
+    if( isTypeProject("APPLICATION","${project.name}") ){
+
+        apply plugin: "application"
+        afterEvaluate{ // after got mainClassName information
+            jar {
+                manifest {
+                    // all project TypeProject.APPLICATION must contains main class at src/App.java
+                    attributes "Main-Class": "App"
+                }
+                duplicatesStrategy = DuplicatesStrategy.EXCLUDE 
+                from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+            }
+        }
+    }
+
+    if( isTypeProject("SONAR","${project.name}") ){
+
+        apply plugin: "jacoco"
+        apply plugin: "org.sonarqube"
+
+        jacocoTestReport {
+            dependsOn test
+            reports {
+                xml.required = true
+            }
+        }
+
+        tasks['sonarqube'].dependsOn jacocoTestReport
+        
+    }
+
+
+    if( isTypeProject("UNIT_TEST","${project.name}") ){
+        dependencies {
+            testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.0"
+            testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.0"
+            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
+            testImplementation "org.mockito:mockito-junit-jupiter:4.8.0"
+        }
+
+        test {
+            testLogging.events = ['passed', 'skipped', 'failed']
+            useJUnitPlatform()
+        }
+    }
+
+    if( isTypeProject("GRPC","${project.name}") ){
+
+        apply plugin: "com.google.protobuf"
+
+        protobuf {
+            protoc { artifact = "com.google.protobuf:protoc:3.21.8" }
+            plugins { grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.50.1" } }
+            generateProtoTasks { all()*.plugins { grpc {} }}
+        }
+
+        dependencies {
+
+            implementation "io.grpc:grpc-protobuf:1.50.1"
+            implementation "io.grpc:grpc-stub:1.50.1"
+            runtimeOnly "io.grpc:grpc-netty-shaded:1.50.1"
+            testImplementation "io.grpc:grpc-testing:1.50.1"
+
+            implementation "javax.annotation:javax.annotation-api:1.3.2"
+
+            protobuf files ("$rootDir/proto/")
+        }
+
+    }
+
+}
+
+def isTypeProject(String type, String name){
+    return "${project["ms.types.$name"]}"
+                .split(",")
+                .collect{it.toUpperCase().trim()}
+                .contains(type.toUpperCase().trim())
+}
+
+

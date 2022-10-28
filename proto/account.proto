@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.account";
+
+message CreateRequest {
+    string accountName = 1;
+    string userName = 2;
+    string userEmail = 3;
+}
+
+message UpdateRequest {
+    string accountId = 1;
+    string accountName = 2;
+}
+
+message CreateResponse {
+    string accountId = 1;
+    string accountName = 2;
+    string dateTimeCreated = 3;
+    string userId = 4;
+    string userName = 5;
+    string userEmail = 6;
+}
+
+message Account {
+    string accountId = 1;
+    string accountName = 2;
+    string dateTimeCreated = 3;
+    string dateTimeLastUpdated = 4;
+}
+
+message ByIdRequest{
+    string accountId = 1;
+}
+
+message ListRequest{
+    int64 numPage = 1;
+    int64 pageSize = 2;
+}
+
+message Empty{
+}
+
+service Write{
+    rpc AccountCreate(CreateRequest) returns (CreateResponse);
+    rpc AccountUpdate(UpdateRequest) returns (Account);
+    rpc AccountRemove(ByIdRequest) returns (Empty);
+}
+
+service Read {
+    rpc AccountGetById(ByIdRequest) returns (Account);
+    rpc AccountList(ListRequest) returns (stream Account);
+}
+

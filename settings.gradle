@@ -1,0 +1,16 @@
+rootProject.name = 'grpc-java-microservices-multimodules'
+
+
+include ':account-ms'; project(':account-ms').projectDir = new File('microservices/account-ms')
+// include ':auth-ms'; project(':auth-ms').projectDir = new File("microservices/auth-ms")
+// include ':document-get-version-ms'; project(':document-get-version-ms').projectDir = new File("microservices/document-get-version-ms")
+// include ':document-history-ms'; project(':document-history-ms').projectDir = new File("microservices/document-history-ms")
+// include ':document-sharing-ms'; project(':document-sharing-ms').projectDir = new File("microservices/document-sharing-ms")
+// include ':document-upgrade-version-ms'; project(:'document-upgrade-version-ms').projectDir = new File("microservices/document-upgrade-version-ms")
+// include ':gateway'; project(':gateway').projectDir = new File("microservices/gateway")
+// include ':notication-sender-ms'; project(':notication-sender-ms').projectDir = new File("microservices/notication-sender-ms")
+// include ':notification-reading-ms'; project(':notification-reading-ms').projectDir = new File("microservices/notification-reading-ms")
+// include ':notification-register-ms'; project(':notification-register-ms').projectDir = new File("microservices/notification-register-ms")
+// include ':permission-ms'; project(':permission-ms').projectDir = new File("microservices/permission-ms")
+
+
