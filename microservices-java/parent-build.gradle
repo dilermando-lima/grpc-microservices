@@ -1,0 +1,87 @@
+/* plugins {
+	id 'org.sonarqube' version '3.4.0.2513'
+	id 'com.google.protobuf' version '0.8.18'
+	id 'java'
+	id 'jacoco'
+} */
+
+apply plugin: 'org.sonarqube'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+version='1.0.0'
+sourceCompatibility=17
+targetCompatibility=17
+
+repositories {
+	mavenLocal()
+	maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
+	mavenCentral()
+}
+
+sourceSets {
+	main.java.srcDirs = [
+		'src',
+		'build/generated/source/proto/main/grpc',
+		'build/generated/source/proto/main/java'
+	]
+	main.resources.srcDirs = ['src-resource']
+	test.java.srcDirs = ['tst']
+	test.resources.srcDirs = ['tst-resource']
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.21.7"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.50.2'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+dependencies {
+	implementation 'io.grpc:grpc-netty:1.50.2'
+	implementation 'io.grpc:grpc-protobuf:1.50.2'
+	implementation 'io.grpc:grpc-stub:1.50.2'
+	compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+	implementation 'io.perfmark:perfmark-api:0.25.0'
+	
+	testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.0"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.0"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
+	testImplementation "org.mockito:mockito-junit-jupiter:4.8.0"
+
+	protobuf files ("$projectDir/../../proto/")
+}
+
+
+jar {
+	manifest {
+	attributes "Main-Class": "App"
+	}
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+	}
+}
+
+tasks['sonarqube'].dependsOn jacocoTestReport
+
+
+test {
+	testLogging.events = ['passed', 'skipped', 'failed']
+	useJUnitPlatform()
+}
