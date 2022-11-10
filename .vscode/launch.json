@@ -7,6 +7,9 @@
             "console": "internalConsole",
             "request": "launch",
             "mainClass": "App",
+            "env": {
+              "ENV_PORT_APP":"3009"
+            },
             "projectName": "account-ms"
         }
     ],

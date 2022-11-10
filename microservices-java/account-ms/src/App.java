@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.util.Objects;
 
 import grpc.account.Account;
 import io.grpc.Server;
@@ -15,7 +16,10 @@ public class App {
 
         var repository = new MemoryRepository<Account>();
 
-        Server server = ServerBuilder.forPort(3009)
+        var port = System.getenv("ENV_PORT_APP");
+        Objects.requireNonNull(port, "ENV_PORT_APP has not been found in environment variables");
+
+        Server server = ServerBuilder.forPort(Integer.parseInt(port))
                 .addService(new AccountWriteService(repository))
                 .addService(new AccountReadService(repository))
                 .intercept(TransmitStatusRuntimeExceptionInterceptor.instance())

@@ -1,0 +1,47 @@
+version: "3.9"
+#  docker-compose -f ./container/docker-compose.yml up
+
+services:
+  ms_account:
+    container_name: ms_account_container
+    image: ms_account
+    build:
+      context: ../
+      dockerfile: ./container/microservices-java.Dockerfile
+      args:
+        SOURCE_APP_PATH: microservices-java/account-ms
+        PARENT_BUILD_GRADLE_PATH: microservices-java/*.gradle
+        PROTO_PATH: proto/*
+        PORT_APP: 3009
+        JVM_ARGS: -Xmx70M -Xms60M
+    ports:
+      - 3009:3009
+
+  ms_account_2:
+    container_name: ms_account_2_container
+    image: ms_account_2
+    build:
+      context: ../
+      dockerfile: ./container/microservices-java.Dockerfile
+      args:
+        SOURCE_APP_PATH: microservices-java/account-ms
+        PARENT_BUILD_GRADLE_PATH: microservices-java/*.gradle
+        PROTO_PATH: proto/*
+        PORT_APP: 3010
+        JVM_ARGS: -Xmx150M -Xms150M
+    ports:
+      - 3010:3010
+
+  ms_account_3:
+    container_name: ms_account_3_container
+    image: ms_account_3
+    build:
+      context: ../
+      dockerfile: ./container/microservices-java.Dockerfile
+      args:
+        SOURCE_APP_PATH: microservices-java/account-ms
+        PARENT_BUILD_GRADLE_PATH: microservices-java/*.gradle
+        PROTO_PATH: proto/*
+        PORT_APP: 3011
+    ports:
+      - 3011:3011
