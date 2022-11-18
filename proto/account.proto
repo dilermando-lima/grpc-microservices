@@ -39,13 +39,13 @@ message ListRequest{
     int64 pageSize = 2;
 }
 
-message Empty{
+message AccountEmptyResponse{
 }
 
 service Write{
     rpc AccountCreate(CreateRequest) returns (CreateResponse);
     rpc AccountUpdate(UpdateRequest) returns (Account);
-    rpc AccountRemove(ByIdRequest) returns (Empty);
+    rpc AccountRemove(ByIdRequest) returns (AccountEmptyResponse);
 }
 
 service Read {

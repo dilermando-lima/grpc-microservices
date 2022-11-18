@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.content";
+
+message EditRequest {
+    double linePosition = 1;
+    string lineContent = 2;
+}
+
+message ContentEmptyResponse{
+}
+
+service ContentEdit {
+    rpc Edit(stream EditRequest) returns (ContentEmptyResponse);
+}

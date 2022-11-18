@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.share";
+
+
+message ChangeAccessRequest {
+    string documentId = 1;
+    string idSession = 2;
+    TypeAccess typeAccess = 3;
+}
+
+message ChangeVisibilityRequest {
+    string documentId = 1;
+    TypeVisibility typeVisibility = 2;
+}
+
+
+enum TypeAccess {
+    ONLY_READ = 0;
+    WRITE = 1;
+}
+
+enum TypeVisibility {
+    PUBLIC = 0;
+    PRIVATE = 1;
+}
+
+message ShareEmptyResponse {
+}
+
+service ShareUpdate {
+    rpc ChangeAccess(stream ChangeAccessRequest) returns (ShareEmptyResponse);
+    rpc ChangeVisibility(ChangeVisibilityRequest) returns (ShareEmptyResponse);
+}
+
+
+
+

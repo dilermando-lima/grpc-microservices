@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.permission";
+
+enum TypeAction {
+    READ_DOCUMENT = 0;
+    UPDATE_DOCUMENT = 1;
+    READ_CONTENT = 2;
+    UPDATE_CONTENT = 3;
+}
+
+message CheckPermissionRequest {
+    TypeAction typeAction = 1;
+    string userId = 2;
+    string documentId = 3;
+}
+
+message UpdatePermissionRequest {
+    TypeAction typeAction = 1;
+    bool isAllowed = 2;
+    string userId = 3;
+    string documentId = 4;
+}
+
+message PermissionEmptyResponse {
+}
+
+service PermissionCheck {
+    rpc Check(CheckPermissionRequest) returns (PermissionEmptyResponse);
+}
+service PermissionUpdate {
+    rpc Update(UpdatePermissionRequest) returns (PermissionEmptyResponse);
+}

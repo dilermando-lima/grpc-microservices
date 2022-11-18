@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.document";
+
+message CreateRequest {
+    string title = 1;
+    string description = 2;
+}
+
+message UpdateRequest {
+    string documentId = 1;
+    string title = 2;
+    string description = 3;
+}
+
+message RemoveRequest {
+    string documentId = 1;
+}
+
+message DocumentResponse {
+    string documentId = 1;
+    string title = 2;
+    string description = 3;
+}
+
+message ListRequest{
+    int64 numPage = 1;
+    int64 pageSize = 2;
+    string filter = 3;
+}
+
+message GetByIdRequest {
+    string documentId = 1;
+}
+
+message DocumentEmptyResponse{
+}
+
+service DocumentUpdate {
+    rpc Create(CreateRequest) returns (DocumentResponse);
+    rpc Update(UpdateRequest) returns (DocumentResponse);
+    rpc Remove(RemoveRequest)returns (DocumentEmptyResponse);
+}
+
+service DocumentRead {
+    rpc List(ListRequest) returns (stream DocumentResponse);
+    rpc GetById(GetByIdRequest) returns (DocumentResponse);
+}
+
+
+

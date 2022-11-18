@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.session";
+
+service Session {
+    rpc Initiate(InitiateRequest) returns (InitiateResponse);
+    rpc Terminate(TerminateRequest) returns (SessionEmptyResponse);
+}
+
+message SessionEmptyResponse{
+}
+
+message InitiateRequest {
+    string nameSession = 1;
+}
+
+message TerminateRequest {
+    string idSession = 1;
+}
+
+message InitiateResponse {
+    string idSession = 1;
+    string nameSession = 2;
+}
+
+

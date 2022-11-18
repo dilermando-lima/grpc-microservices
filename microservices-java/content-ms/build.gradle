@@ -1,0 +1,3 @@
+buildscript { apply from: "$projectDir/../parent-buildscript.gradle" }
+apply from: "$projectDir/../parent-build.gradle"
+version="1.0.0"

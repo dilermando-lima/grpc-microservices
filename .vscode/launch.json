@@ -8,9 +8,81 @@
             "request": "launch",
             "mainClass": "App",
             "env": {
-              "ENV_PORT_APP":"3009"
+                "ENV_PORT_APP": "3009"
             },
             "projectName": "account-ms"
+        },
+        {
+            "type": "java",
+            "name": "content-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3010"
+            },
+            "projectName": "content-ms"
+        },
+        {
+            "type": "java",
+            "name": "document-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3011"
+            },
+            "projectName": "document-ms"
+        },
+        {
+            "type": "java",
+            "name": "permission-check-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3012"
+            },
+            "projectName": "permission-check-ms"
+        },
+        {
+            "type": "java",
+            "name": "permission-update-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3012"
+            },
+            "projectName": "permission-update-ms"
+        },
+        {
+            "type": "java",
+            "name": "session-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3013"
+            },
+            "projectName": "session-ms"
+        },
+        {
+            "type": "java",
+            "name": "share-ms",
+            "console": "internalConsole",
+            "request": "launch",
+            "mainClass": "App",
+            "env": {
+                "ENV_PORT_APP": "3014"
+            },
+            "projectName": "share-ms"
         }
     ],
+    "compounds": [
+        {
+            "name": "Launch all ms",
+            "configurations": ["account-ms","content-ms","document-ms","permission-check-ms","permission-update-ms","session-ms","share-ms"]
+        }
+    ]
 }

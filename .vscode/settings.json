@@ -2,14 +2,21 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.inlayHints.parameterNames.enabled": "none", 
     "java.project.sourcePaths": [
-        "microservices-java/account-ms/"
+        "microservices-java/account-ms",
+        "microservices-java/content-ms",
+        "microservices-java/document-ms",
+        "microservices-java/permission-check-ms",
+        "microservices-java/permission-update-ms",
+        "microservices-java/session-ms",
+        "microservices-java/share-ms",
     ],
     "files.exclude": {
-        "**/.gradle/": true,
-        "gradle/": true,
-        "**/build/": true,
-        "**/bin/": true,
-        "gradlew" : true,
-        "gradlew.bat" : true,
+        // "**/.gradle/": true,
+        // "gradle/": true,
+        // "**/build/": true,
+        // "**/bin/": true,
+        // "gradlew" : true,
+        // "gradlew.bat" : true,
     }
 }
+
